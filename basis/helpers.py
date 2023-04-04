@@ -11,24 +11,23 @@ def create_client():
 # https://xrpl.org/xrp-testnet-faucet.html
 def create_account(client):
     from xrpl.wallet import generate_faucet_wallet
-    test_wallet = generate_faucet_wallet(client, debug=True)
+    wallet = generate_faucet_wallet(client, debug=True)
 
-    # Return an account str from the wallet
-    return test_wallet.classic_address
+    return wallet
 
 # Derive an x-address from the classic address:
 # https://xrpaddress.info/
-def print_addresses(account):
+def print_addresses(wallet):
     from xrpl.core import addresscodec
-    test_xaddress = addresscodec.classic_address_to_xaddress(account, tag=12345, is_test_network=True)
-    print("\nClassic address:\n\n", account)
+    test_xaddress = addresscodec.classic_address_to_xaddress(wallet.classic_address, tag=12345, is_test_network=True)
+    print("\nClassic address:\n\n", wallet.classic_address)
     print("X-address:\n\n", test_xaddress)
 
 # Look up info about your account
-def print_account_info(client, client_account):
+def print_account_info(client, wallet):
     from xrpl.models.requests.account_info import AccountInfo
     acct_info = AccountInfo(
-        account=client_account,
+        account=wallet.classic_address,
         ledger_index="validated",
         strict=True,
     )
@@ -38,3 +37,12 @@ def print_account_info(client, client_account):
 
     import json
     print(json.dumps(response.result, indent=4, sort_keys=True))
+
+def prepare_transaction(sender_wallet, amount, destination):
+    import xrpl
+    my_payment = xrpl.models.transactions.Payment(
+        account = sender_wallet.classic_address,
+        amount = xrpl.utils.xrp_to_drops(amount),
+        destination = destination,
+    )
+    print("Payment object:", my_payment)
