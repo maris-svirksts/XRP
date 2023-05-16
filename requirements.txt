@@ -1,1 +1,4 @@
-xrpl-py
+xrpl
+requests
+hvac
+pytest
