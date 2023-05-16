@@ -55,6 +55,7 @@ pytest
 
 The folder structure of the project is as follows:
 
+```
 XRP/
 |- src/
 | |- vault.py
@@ -70,7 +71,7 @@ XRP/
 |- pytest.ini
 |- setup.py
 |- LICENSE
-
+```
 
 - `src/`: Contains the source code files.
 - `tests/`: Contains the test code files.
