@@ -8,7 +8,7 @@ setup(
     author_email='maris.svirksts@gmail.com',
     packages=find_packages(),
     install_requires=[
-        'xrpl',
+        'xrpl-pl',
         'requests',
         'hvac',
     ],
