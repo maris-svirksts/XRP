@@ -1,4 +1,4 @@
-xrpl-pl
+xrpl-py
 requests
 hvac
 pytest
