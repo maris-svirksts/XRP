@@ -1,13 +1,22 @@
-from xrpl.wallet import Wallet
-from xrpl.clients import Client
-from ..src.xrp import make_xrp_payment_from_vault
+import sys
+
+# Add the project directory to the Python module search path
+sys.path.append("..")
+
+from xrpl.wallet import generate_faucet_wallet
+from xrpl.clients import JsonRpcClient
+from XRP.src.xrp import make_xrp_payment_from_vault
+
+JSON_RPC_URL = "https://s.altnet.rippletest.net:51234/"
 
 def test_make_xrp_payment_from_vault():
-    # Create sender wallet
-    sender_wallet = Wallet.create(test=True)
+    client = JsonRpcClient(JSON_RPC_URL)
 
-    # Create receiver wallet
-    receiver_wallet = Wallet.create(test=True)
+    # Create sender wallet.
+    sender_wallet = generate_faucet_wallet(client, debug=True)
+
+    # Create receiver wallet.
+    receiver_wallet = generate_faucet_wallet(client, debug=True)
 
     vault_url = "https://vault.example.com"
     vault_token = "my-token"
